@@ -9,7 +9,7 @@ const app = express();
 const server = http.createServer(app);
 // ✅ Fixed CORS setup
 const corsOptions = {
-  origin: "http://localhost:5173", // your frontend origin
+  origin:  "https://msd-capstone-qype.vercel.app",// your frontend origin
   methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
   credentials: true,
 };
