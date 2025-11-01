@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>💬 Student Group Chatroom</title>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+ <meta http-equiv="Content-Security-Policy" 
+        content="default-src 'self' http://localhost:3000;
+                 script-src 'self' 'unsafe-inline' https://cdn.socket.io https://cdn.jsdelivr.net;
+                 style-src 'self' 'unsafe-inline';
+                 connect-src 'self' ws://localhost:3000 http://localhost:3000;
+                 img-src 'self' data: blob:;">
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-image: url("chatroom.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #chatbox {
+      width: 450px;
+      height: 640px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+    }
+
+    #header {
+      background: linear-gradient(135deg, #43cea2, #185a9d);
+      color: white;
+      padding: 18px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    #messages {
+      flex: 1;
+      padding: 15px;
+      background: #f7f7f7;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .msg {
+      max-width: 75%;
+      margin-bottom: 14px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      position: relative;
+      word-wrap: break-word;
+      font-size: 15px;
+      line-height: 1.5;
+      animation: fadeIn 0.3s ease;
+      color: #222;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .sent {
+      align-self: flex-end;
+      background-color: #dcf8c6;
+      border-bottom-right-radius: 0;
+    }
+
+    .received {
+      align-self: flex-start;
+      background-color: #ffffff;
+      border-bottom-left-radius: 0;
+    }
+
+    .timestamp {
+      font-size: 11px;
+      color: #666;
+      position: absolute;
+      bottom: -16px;
+      right: 8px;
+    }
+
+    #input-area {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background-color: #fafafa;
+      border-top: 1px solid #ddd;
+    }
+
+    #user {
+      width: 25%;
+      margin-right: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 13px;
+    }
+
+    #message {
+      flex: 1;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 14px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #43cea2, #185a9d);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      margin-left: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 3px 12px rgba(24, 90, 157, 0.4);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #messages::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #messages::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+    }
+
+    .date-separator {
+      text-align: center;
+      margin: 10px 0;
+      color: #777;
+      font-size: 12px;
+    }
+
+    .context-menu {
+      position: absolute;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      padding: 5px 0;
+      z-index: 999;
+    }
+
+    .context-menu div {
+      padding: 6px 15px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .context-menu div:hover {
+      background-color: #f0f0f0;
+    }
+
+    .legend {
+      font-size: 12px;
+      text-align: center;
+      padding: 4px;
+      background: #f4f4f4;
+      color: #666;
+      border-top: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+  <div id="chatbox">
+    <div id="header">💬 Student Group Chatroom</div>
+    <div id="messages"></div>
+
+    <div id="input-area">
+      <input id="user" placeholder="Name" />
+      <input id="message" placeholder="Type a message..." />
+      <button id="emojiBtn">😊</button>
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <emoji-picker id="emojiPicker" style="display:none;"></emoji-picker>
+    <div class="legend">Each user has their own chat color</div>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script>
+    const socket = io("http://localhost:3000");
+    const messagesDiv = document.getElementById("messages");
+    const userInput = document.getElementById("user");
+    const messageInput = document.getElementById("message");
+
+    const userColors = {};
+    const colorPalette = ["#ffb6c1", "#add8e6", "#98fb98", "#ffd700", "#ffa07a", "#d8bfd8", "#87cefa", "#f08080"];
+
+    function getUserColor(username) {
+      if (!userColors[username]) {
+        const randomColor = colorPalette[Object.keys(userColors).length % colorPalette.length];
+        userColors[username] = randomColor;
+      }
+      return userColors[username];
+    }
+
+    socket.on("previousMessages", (oldMessages) => {
+      messagesDiv.innerHTML = "";
+      oldMessages.forEach(msg => addMessage(msg));
+    });
+
+    socket.on("chatMessage", (msg) => addMessage(msg));
+
+    socket.on("deleteMessage", ({ messageId, type }) => {
+      const msgDiv = document.querySelector(`[data-id='${messageId}']`);
+      if (msgDiv) {
+        if (type === "everyone") msgDiv.innerHTML = "<i>Message deleted for everyone</i>";
+        else msgDiv.innerHTML = "<i>Message deleted for you</i>";
+      }
+    });
+
+    function sendMessage() {
+      const user = userInput.value.trim();
+      const text = messageInput.value.trim();
+      if (!user || !text) return alert("Enter name and message!");
+      const msgData = { user, text };
+      socket.emit("chatMessage", msgData);
+      messageInput.value = "";
+    }
+
+    // Date separators
+    let lastMessageDate = "";
+    function formatDateHeader(date) {
+      const today = new Date();
+      const d = new Date(date);
+      if (today.toDateString() === d.toDateString()) return "Today";
+      const yesterday = new Date();
+      yesterday.setDate(today.getDate() - 1);
+      if (yesterday.toDateString() === d.toDateString()) return "Yesterday";
+      return d.toLocaleDateString();
+    }
+
+    function insertDateIfNeeded(date) {
+      const formatted = formatDateHeader(date);
+      if (formatted !== lastMessageDate) {
+        lastMessageDate = formatted;
+        const div = document.createElement("div");
+        div.className = "date-separator";
+        div.textContent = formatted;
+        messagesDiv.appendChild(div);
+      }
+    }
+
+    function addMessage(msg) {
+      insertDateIfNeeded(msg.createdAt || new Date());
+      const div = document.createElement("div");
+      div.classList.add("msg");
+      const currentUser = userInput.value.trim();
+      div.classList.add(msg.user === currentUser ? "sent" : "received");
+      div.style.backgroundColor = getUserColor(msg.user);
+      div.setAttribute("data-id", msg.id);
+      const time = new Date(msg.createdAt || new Date()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      div.innerHTML = `<b>${msg.user}</b><br>${msg.text}<div class="timestamp">${time}</div>`;
+
+      // Right-click to delete
+      div.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        showContextMenu(e.pageX, e.pageY, msg.id);
+      });
+
+      messagesDiv.appendChild(div);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    // Context menu
+    function showContextMenu(x, y, messageId) {
+      const existing = document.querySelector(".context-menu");
+      if (existing) existing.remove();
+
+      const menu = document.createElement("div");
+      menu.className = "context-menu";
+      menu.style.left = `${x}px`;
+      menu.style.top = `${y}px`;
+      menu.innerHTML = `
+        <div onclick="deleteMessage('${messageId}', 'me')">🗑️ Delete for Me</div>
+        <div onclick="deleteMessage('${messageId}', 'everyone')">🚫 Delete for Everyone</div>
+      `;
+      document.body.appendChild(menu);
+      document.addEventListener("click", () => menu.remove(), { once: true });
+    }
+
+    function deleteMessage(messageId, type) {
+      const user = userInput.value.trim();
+      socket.emit("deleteMessage", { messageId, type, user });
+    }
+
+
+    const emojiPicker = document.getElementById("emojiPicker");
+    const emojiBtn = document.getElementById("emojiBtn");
+    emojiBtn.addEventListener("click", () => {
+      emojiPicker.style.display = emojiPicker.style.display === "none" ? "block" : "none";
+    });
+    emojiPicker.addEventListener("emoji-click", (event) => {
+      messageInput.value += event.detail.unicode;
+      emojiPicker.style.display = "none";
+    });
+
+    messageInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+</body>
+</html>

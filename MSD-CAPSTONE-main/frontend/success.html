@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Successful</title>
+  <style>
+    body { font-family: Arial; text-align: center; margin-top: 50px; }
+    h1 { color: green; }
+    a { color: blue; text-decoration: underline; }
+  </style>
+<meta http-equiv="Content-Security-Policy" 
+      content="default-src 'self'; 
+               script-src 'self' 'unsafe-inline';
+               connect-src 'self' http://localhost:3000;">
+</head>
+<body>
+  <h1>Payment Successful!</h1>
+  <p>We’ve emailed your Jitsi meeting link. Please check your inbox.</p>
+  <a href="webinars.html">Go back to webinars</a>
+  <script>
+const registrationData = JSON.parse(localStorage.getItem("registration"));
+console.log("Loaded registration:", registrationData);
+
+if (registrationData) {
+  fetch("http://localhost:3000/api/webinars/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(registrationData)
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert(data.message);
+    console.log("Meeting link:", data.meetingLink);
+    // Optionally show on page
+    const p = document.createElement("p");
+    p.innerHTML = `<strong>Your Jitsi Link:</strong> <a href="${data.meetingLink}" target="_blank">${data.meetingLink}</a>`;
+    document.body.appendChild(p);
+  })
+  .catch(err => console.error("Error registering:", err));
+} else {
+  console.error("No registration data found in localStorage");
+}
+</script>
+
+</body>
+</html>

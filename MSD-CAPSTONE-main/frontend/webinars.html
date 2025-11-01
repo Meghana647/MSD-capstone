@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webinars</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    .flex-container {
+      display: flex;
+      font-size: 20px;
+      width: 100%;
+      height: 50px;
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+    .navbar {
+      display: inline-block;
+      margin-left: 60px;
+      width: 200px;
+      text-align: center;
+      padding: 10px 0;
+      text-decoration: none;
+      color: black;
+    }
+    .navbar:hover {
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+    }
+
+    header {
+      margin-top: 30px;
+      background: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h2 {
+      text-align: center;
+      margin: 30px 0 10px;
+    }
+
+    .webinars-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .webinar-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 300px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .webinar-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .webinar-card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .webinar-card h3 {
+      margin: 10px 0;
+      font-size: 20px;
+      color: #222;
+    }
+
+    .webinar-card p {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .date, .time {
+      margin: 10px 0;
+      font-weight: bold;
+      color: #4CAF50;
+    }
+
+    .btn {
+      background: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <nav class="flex-container">
+    <img src="logo.png" alt="Logo" style="width:200px;height:60px;">
+    <a class="navbar" href="index.html">Home</a>
+    <a class="navbar" href="webinars.html">Webinars</a>
+    <a class="navbar" href="contactus.html">Contact</a>
+    <a class="navbar" href="aboutus.html">About Us</a>
+    <a class="navbar" href="login.html">Login</a>
+    <a class="navbar" href="signup.html">Signup</a>
+  </nav>
+  
+   
+<div id="company-banner" style="
+  width: 70%;
+  margin-left:250px;
+  text-align: center;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  padding:20px;
+">
+  <img src="webinarimage.jpg" 
+       alt="MSD Webinars Banner"
+       style="width: 40%; height: 350px; object-fit: cover; display: inline;">
+        <img src="webben.jpg" 
+       alt="MSD Webinars Banner"
+       style="width: 40%; height: 350px; object-fit: cover; display: inline;">
+  <div style="background: linear-gradient(135deg, #4CAF50, #2E7D32); padding: 20px;">
+    <a href="#host-section" 
+       style="background:white; color:#2E7D32; padding:12px 28px; border-radius:8px; 
+              text-decoration:none; font-weight:bold; font-size:18px;">
+      Become a Host 
+    </a>
+  </div>
+</div>
+
+
+  <header>
+    <h1>Our Webinars</h1>
+    <p>Join our live sessions and learn from experts</p>
+  </header>
+<div style="text-align:center; margin:20px;">
+  <input type="text" id="searchBar" placeholder="Search webinars by title or host..." 
+         style="padding:10px; width:60%; border:1px solid #ccc; border-radius:5px; font-size:16px;">
+</div>
+
+  <h2>Upcoming Webinars</h2>
+
+  <div class="webinars-container" id="webinars-container"></div>
+
+  <h2>Host Portal</h2>
+  <div id="host-section" style="text-align:center; margin-bottom:30px;">
+    <input id="hostEmail" type="email" placeholder="Enter host email">
+    <button onclick="verifyHost()" class="btn">Verify Host</button>
+  </div>
+
+  <div id="createWebinarForm" style="display:none; text-align:center;">
+    <h3>Create Webinar</h3>
+    <input id="title" placeholder="Webinar Title"><br><br>
+    <input id="desc" placeholder="Description"><br><br>
+    <input id="date" type="date"><br><br>
+    <input id="time" type="time"><br><br>
+    <input id="price" type="number" placeholder="Price"><br><br>
+    <input id="hostname" placeholder="Host Name"><br><br>
+    <button onclick="createWebinar()" class="btn">Create Webinar</button>
+  </div>
+
+  <script>
+    const noCacheHeaders = { "Cache-Control": "no-cache", Pragma: "no-cache" };
+    let allWebinars = []; 
+async function fetchWebinars() {
+  try {
+    const res = await fetch("http://localhost:3000/api/webinars/get", { headers: noCacheHeaders });
+    const data = await res.json();
+
+    if (res.ok && data.webinars.length > 0) {
+      allWebinars = data.webinars;
+      displayWebinars(allWebinars);
+    } else {
+      document.getElementById("webinars-container").innerHTML = "<p>No webinars found.</p>";
+    }
+  } catch (err) {
+    console.error("Error fetching webinars:", err);
+  }
+}
+function displayWebinars(webinars) {
+  const container = document.getElementById("webinars-container");
+  container.innerHTML = "";
+
+  webinars.forEach(webinar => {
+    const card = document.createElement("div");
+    card.classList.add("webinar-card");
+    card.innerHTML = `
+      <img src="unnamed.jpg" alt="Webinar">
+      <h3>${webinar.title}</h3>
+      <p class="date">${webinar.date}</p>
+      <p class="time">${webinar.time}</p>
+      <div class="host-details">
+        <p class="hostname">${webinar.hostname}</p>
+        <p class="hostmail">${webinar.hostemail}</p>
+        <p class="price">${webinar.price}/-</p>
+      </div>
+      <p>${webinar.description}</p>
+      <button class="register-btn">Register</button>
+    `;
+    card.querySelector(".register-btn").addEventListener("click", function() {
+      register(this);
+    });
+    container.appendChild(card);
+  });
+}
+
+
+document.getElementById("searchBar").addEventListener("input", function() {
+  const searchText = this.value.toLowerCase().trim();
+
+  const filtered = allWebinars.filter(w =>
+    w.title.toLowerCase().includes(searchText) ||
+    w.hostname.toLowerCase().includes(searchText)
+  );
+
+  displayWebinars(filtered);
+});
+
+
+window.onload = fetchWebinars;
+    
+    document.querySelectorAll(".register-btn").forEach(btn => {
+      btn.addEventListener("click", function() {
+        register(this);
+      });
+    });
+
+    async function verifyHost() {
+      const email = document.getElementById("hostEmail").value.trim();
+      if (!email) return alert("Please enter host email!");
+
+      const res = await fetch("http://localhost:3000/api/webinars/verify-host", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+      if (data.verified) {
+        alert("Host verified successfully!");
+        document.getElementById("createWebinarForm").style.display = "block";
+      } else {
+        alert(data.message || "Host not found!");
+      }
+    }
+
+    async function createWebinar() {
+      const title = document.getElementById("title").value.trim();
+      const description = document.getElementById("desc").value.trim();
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+      const price = parseInt(document.getElementById("price").value) || 0;
+      const hostname = document.getElementById("hostname").value.trim();
+      const hostemail = document.getElementById("hostEmail").value.trim();
+
+      const res = await fetch("http://localhost:3000/api/webinars/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, description, date, time, price, hostname, hostemail }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert("Webinar created successfully!");
+        document.getElementById("createWebinarForm").style.display="none";
+        addWebinarCard(data.webinar);
+      } else {
+        alert(data.message || "Error creating webinar");
+      }
+    }
+
+    function addWebinarCard(webinar) {
+      const container = document.getElementById("webinars-container");
+      const card = document.createElement("div");
+      card.classList.add("webinar-card");
+
+      card.innerHTML = `
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhZWDqGaNS3nTLQZO7XkGFcHHEEJpksqNU7w&s" alt="Webinar">
+        <h3>${webinar.title}</h3>
+        <p class="date">${webinar.date}</p>
+        <p class="time">${webinar.time}</p>
+        <div class="host-details">
+          <p class="hostname">${webinar.hostname}</p>
+          <p class="hostmail">${webinar.hostemail}</p>
+          <p class="price">${webinar.price}/-</p>
+        </div>
+        <p>${webinar.description}</p>
+        <button class="register-btn">Register</button>
+      `;
+      card.querySelector(".register-btn").addEventListener("click", function() {
+        register(this);
+      });
+
+      container.appendChild(card);
+    }
+
+    async function register(button) {
+      const card = button.closest(".webinar-card");
+      const webinarName = card.querySelector("h3").innerText.trim();
+      const priceText = card.querySelector(".price").innerText;
+      const price = parseInt(priceText.replace("/-", ""));
+      const hostEmail = card.querySelector(".hostmail").innerText.trim();
+
+      const name = prompt("Enter your name:");
+      const email = prompt("Enter your email:");
+
+      if (!name || !email) {
+        alert("Name and email are required!");
+        return;
+      }
+
+      console.log("Registering:", { name, email, webinarName, price, hostEmail });
+
+      
+      const checkRes = await fetch("http://localhost:3000/api/webinars/check-registration", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...noCacheHeaders },
+        body: JSON.stringify({ email, webinar: webinarName }),
+      });
+
+      const checkData = await checkRes.json();
+      if (checkData.registered) {
+        alert(`You are already registered for "${webinarName}".`);
+        return;
+      }
+
+      
+      if (price > 0) {
+        localStorage.setItem("registration", JSON.stringify({ name, email, webinar: webinarName }));
+        const paymentRes = await fetch("http://localhost:3000/api/stripe/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", ...noCacheHeaders },
+          body: JSON.stringify({ name, email, webinar: webinarName, price }),
+        });
+
+        const paymentData = await paymentRes.json();
+        if (paymentData.url) {
+          window.location = paymentData.url;
+        } else {
+          alert(paymentData.message || "Payment error, please try again.");
+        }
+        return;
+      }
+
+      const regRes = await fetch("http://localhost:3000/api/webinars/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...noCacheHeaders },
+        body: JSON.stringify({ name, email, webinar: webinarName }),
+      });
+
+      const regData = await regRes.json();
+      if (regRes.ok) {
+        alert(`Successfully registered for "${webinarName}"!`);
+      } else {
+        alert(regData.message || "Registration failed. Please try again.");
+      }
+    }
+  </script>
+</body>
+</html> 
+
+
+
+

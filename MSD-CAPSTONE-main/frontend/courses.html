@@ -1,0 +1,462 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courses</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      transition: background-color 0.4s, color 0.4s;
+    }
+
+    .flex-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      padding: 20px;
+    }
+
+    .card {
+      width: 350px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      padding: 10px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .flex-container img {
+      width: 100%;
+      height: 250px;
+      border-radius: 10px;
+    }
+
+    .flex-container p {
+      font-size: 22px;
+      margin: 10px 0;
+    }
+
+    .flex-container button {
+      width: 150px;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: rgba(221, 18, 18, 0.849);
+      color: white;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .flex-container button:hover {
+      background-color: rgb(255, 80, 80);
+    }
+
+    .logo-nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.747);
+      padding: 10px;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-evenly;
+      flex-grow: 1;
+    }
+
+    .navbar a {
+      color: white;
+      padding: 10px;
+      font-size: 22px;
+      text-decoration: none;
+    }
+
+    .navbar a:hover {
+      color: yellow;
+    }
+
+    img {
+      width: 100px;
+      height: 50px;
+    }
+
+    #toggle {
+      font-size: 30px;
+      color: yellow;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Modal Styling */
+    #courseModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      width: 60%;
+      max-height: 80%;
+      overflow-y: auto;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #closeModal {
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    #courseContent a {
+      color: blue;
+      text-decoration: underline;
+      font-size: 18px;
+    }
+
+    #courseContent h3 {
+      margin-top: 15px;
+    }
+
+    @media (max-width: 900px) {
+      .flex-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .flex-container {
+        grid-template-columns: 1fr;
+      }
+      .modal-content {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="logo-nav">
+    <img src="logo.png" alt="Logo">
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <a href="aboutus.html">About Us</a>
+      <a href="contactus.html">Contact</a>
+      <a href="dashboard.html">Dashboard</a>
+      <div>
+        <button id="toggle">&#9728;</button>
+      </div>
+    </nav>
+  </div>
+
+  <div class="flex-container">
+    <div class="card">
+      <img src="https://i.ytimg.com/vi/k68j9xlbHHk/hqdefault.jpg">
+      <p>React & Redux complete Course</p>
+      <button>Get The Course</button>
+    </div>
+    <div class="card">
+      <img src="https://i.ibb.co/MyRwNTmK/COMPLETE-COMPUTER-NETWORKS.png" alt="Computer Networks">
+      <p>Computer Networks</p>
+      <button>Get The Course</button>
+    </div>
+    <div class="card">
+      <img src="https://i.ibb.co/B5hYL3MV/no-gimmicks.png" alt="Thermodynamics">
+      <p>Thermodynamics in Physics</p>
+      <button>Get The Course</button>
+    </div>
+    <div class="card">
+      <img src="https://i.ibb.co/Kz9FjSnv/no-gimmicks-2.png" alt="Numbers">
+      <p>Play with Numbers</p>
+      <button>Get The Course</button>
+    </div>
+    <div class="card">
+      <img src="https://i.ibb.co/Kp6wn3mv/Untitled-design.png" alt="Anatomy">
+      <p>Learn Human Anatomy</p>
+      <button>Get The Course</button>
+    </div>
+    <div class="card">   
+      <img src="https://i.ibb.co/BV5xmJSh/COMPETE-WITH-WORLD.png" alt="Current Affairs">
+      <p>Daily Current Affairs</p>
+      <button>Get The Course</button>
+    </div>
+    <div class="card">
+      <img src="https://i.ibb.co/HLqgXcB8/COMPETE-WITH-WORLD-1.png" alt="Health">
+      <p>Keep yourself healthy</p>
+      <button>Get The Course</button>
+    </div>
+    <div class="card">
+      <img src="https://i.ibb.co/hRDxTL1G/COMPETE-WITH-WORLD-2.png" alt="Social Media">
+      <p>Trend in Social Media</p>
+      <button>Get The Course</button>
+    </div>
+  </div>
+
+  <div id="courseModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="courseTitle"></h2>
+        <button id="closeModal">&times;</button>
+      </div>
+      <div id="courseContent"></div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle Theme
+    const toggle = document.getElementById("toggle");
+    toggle.addEventListener("click", () => {
+      if (toggle.style.color === "yellow") {
+        toggle.style.color = "white";
+        toggle.innerHTML = "&#x1F319;";
+        document.body.style.backgroundColor = "black";
+        document.body.style.color = "white";
+      } else {
+        toggle.style.color = "yellow";
+        toggle.innerHTML = "&#9728;";
+        document.body.style.backgroundColor = "white";
+        document.body.style.color = "black";
+      }
+    });
+
+    // Course Data
+    const courseData = {
+      "React & Redux complete Course": {
+        videos: ["videos/reactredux.mp4"],
+        pdfs: ["materials/reactredux_notes.pdf"],
+        ppts: ["materials/reactredux_slides.pptx"],
+        drive: "https://drive.google.com/drive/folders/reactredux"
+      },
+      "Computer Networks": {
+        videos: ["videos/computernetworks.mp4"],
+        pdfs: ["materials/networks_notes.pdf"],
+        ppts: [],
+        drive: "https://drive.google.com/drive/folders/networks"
+      },
+      "Thermodynamics in Physics": {
+        videos: ["videos/thermodynamics.mp4"],
+        pdfs: ["materials/thermo_notes.pdf"],
+        ppts: [],
+        drive: ""
+      },
+      "Play with Numbers": {
+        videos: ["videos/numbers.mp4"],
+        pdfs: ["materials/numbers_practice.pdf"],
+        ppts: [],
+        drive: ""
+      },
+      "Learn Human Anatomy": {
+        videos: ["videos/anatomy.mp4"],
+        pdfs: [],
+        ppts: [],
+        drive: ""
+      },
+      "Daily Current Affairs": {
+        videos: ["videos/currentaffairs.mp4"],
+        pdfs: ["materials/currentaffairs.pdf"],
+        ppts: [],
+        drive: ""
+      },
+      "Keep yourself healthy": {
+        videos: ["videos/health.mp4"],
+        pdfs: [],
+        ppts: [],
+        drive: ""
+      },
+      "Trend in Social Media": {
+        videos: ["videos/socialmedia.mp4"],
+        pdfs: [],
+        ppts: [],
+        drive: ""
+      }
+    };
+
+    const modal = document.getElementById("courseModal");
+    const closeModal = document.getElementById("closeModal");
+    const courseTitle = document.getElementById("courseTitle");
+    const courseContent = document.getElementById("courseContent");
+
+    // Handle Get The Course
+    document.querySelectorAll(".card button").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const title = e.target.previousElementSibling.textContent.trim();
+        const data = courseData[title];
+
+        if (!data) {
+          alert("Resources not found for this course!");
+          return;
+        }
+
+        let html = "";
+
+        // Videos open in new tab
+        if (data.videos?.length) {
+          html += `<h3>Video Lectures:</h3>`;
+          data.videos.forEach(v => {
+            const videoName = v.split('/').pop();
+            html += `<a href="${v}" target="_blank">🎥 ${videoName}</a><br>`;
+          });
+        }
+
+        // PDFs
+        if (data.pdfs?.length) {
+          html += `<h3>PDFs:</h3>`;
+          data.pdfs.forEach(p => html += `<a href="${p}" target="_blank">${p.split('/').pop()}</a><br>`);
+        }
+
+        // PPTs
+        if (data.ppts?.length) {
+          html += `<h3>PPTs:</h3>`;
+          data.ppts.forEach(p => html += `<a href="${p}" target="_blank">${p.split('/').pop()}</a><br>`);
+        }
+
+        // Drive
+        if (data.drive) {
+          html += `<h3>Google Drive:</h3><a href="${data.drive}" target="_blank">${data.drive}</a>`;
+        }
+
+        courseTitle.textContent = title;
+        courseContent.innerHTML = html;
+        modal.style.display = "flex";
+      });
+    });
+
+    // Close Modal
+    closeModal.addEventListener("click", () => modal.style.display = "none");
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) modal.style.display = "none";
+    });
+  </script>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Courses</title>
+</head>
+<body>
+  <h1>Available Courses</h1>
+
+  <div class="flex-container" id="courseList">
+    <!-- Courses will be dynamically inserted here -->
+  </div>
+
+  <!-- Modal for showing course details -->
+  <div id="courseModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+       background-color:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
+    <div style="background:white; padding:20px; border-radius:10px; width:80%; max-height:90%; overflow:auto;">
+      <h2 id="courseTitle"></h2>
+      <div id="courseContent"></div>
+      <button id="closeModal">Close</button>
+    </div>
+  </div>
+
+  <script>
+    const backendURL = "http://localhost:3000/api/courses"; // adjust if deployed
+    const courseList = document.getElementById("courseList");
+    const modal = document.getElementById("courseModal");
+    const courseTitle = document.getElementById("courseTitle");
+    const courseContent = document.getElementById("courseContent");
+    const closeModal = document.getElementById("closeModal");
+
+    // Fetch courses from backend
+    fetch(backendURL)
+      .then(res => res.json())
+      .then(courses => {
+        if (!courses.length) {
+          courseList.innerHTML = "<p>No courses available yet.</p>";
+          return;
+        }
+
+        // Create a card for each course
+        courses.forEach(course => {
+          const card = document.createElement("div");
+          card.classList.add("card");
+          card.innerHTML = `
+            <img src="${course.thumbnail?.url || 'https://via.placeholder.com/300'}" width="300">
+            <p>${course.title}</p>
+            <button>Get The Course</button>
+          `;
+          card.querySelector("button").addEventListener("click", () => showCourse(course));
+          courseList.appendChild(card);
+        });
+      })
+      .catch(err => {
+        console.error("Error fetching courses:", err);
+        courseList.innerHTML = "<p>Failed to load courses.</p>";
+      });
+
+    function showCourse(course) {
+      courseTitle.textContent = course.title;
+      let html = `<p>${course.description || ''}</p>`;
+
+      // Videos
+      if (course.videos?.length) {
+        html += `<h3>🎥 Videos:</h3>`;
+        course.videos.forEach(v => {
+          html += `<video controls width="100%">
+                     <source src="${v.url}" type="video/mp4">
+                   </video>`;
+        });
+      }
+
+      // PDFs
+      if (course.pdfs?.length) {
+        html += `<h3>📘 PDFs:</h3>`;
+        course.pdfs.forEach(p => {
+          html += `<a href="${p.url}" target="_blank">${p.url.split('/').pop()}</a><br>`;
+        });
+      }
+
+      // PPTs
+      if (course.ppts?.length) {
+        html += `<h3>📊 PPTs:</h3>`;
+        course.ppts.forEach(p => {
+          html += `<a href="${p.url}" target="_blank">${p.url.split('/').pop()}</a><br>`;
+        });
+      }
+
+      // Drive
+      if (course.drive) {
+        html += `<h3>📂 Drive Link:</h3>
+                 <a href="${course.drive}" target="_blank">${course.drive}</a>`;
+      }
+
+      courseContent.innerHTML = html;
+      modal.style.display = "flex";
+    }
+
+    closeModal.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+  </script>
+</body>
+</html>

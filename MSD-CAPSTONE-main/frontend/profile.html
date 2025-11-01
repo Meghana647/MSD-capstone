@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body{
+            background-image:url("profile.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap:20px;
+            height:100vh;
+        }
+        label,input,textarea{ display:block; font-weight: bold; }
+        label{ margin: 10px 0; }
+        textarea {
+            width: 400px;
+            padding: 10px;
+            font-size: 16px;
+            line-height: 1.4;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        div{
+            border: 2px solid aliceblue;
+            width: 500px;
+            margin-left: 400px;
+            height: auto;
+            padding: 50px 40px;
+            margin-top: 110px;
+            border-radius: 20px;
+            box-shadow: 10px -10px 10px black;
+            margin-bottom: 100px;
+            font-size:20px;
+            background-color: bisque;
+        }
+        .required { color:red; }
+        input { width:300px; height:25px; border:2px solid black; border-radius: 10px; opacity: 0.6; }
+        .flex-container{
+            display: flex;
+            font-size:20px;
+            margin-top:30px;
+            width:100%;
+            height:50px;
+            gap:20px;
+        }
+        .navbar{
+            color:black;
+            width:200px;
+            text-align: center;
+            padding-top: 10px;
+            text-decoration-line: none;
+        }
+        .navbar:hover{ background-color: rgba(255, 94, 0, 0.986); text-decoration-line: none; }
+        button{
+            margin-left: 200px;
+            margin-top:70px;
+            width:70px;
+            height:40px;
+            border:2px solid white;
+            border-radius:5px;
+            background-color: lightcoral;
+            font-weight: bold;
+            font-size:25px;
+        }
+        .social-link{
+            color:black;
+            font-size:20px;
+            text-decoration:none;
+            font-weight:bold;
+            margin-top:30px;
+            width:fit-content;
+        }
+        .social-link:hover{
+            background-color:gold;
+        }
+    </style>
+</head>
+<body>
+    <nav class="flex-container">
+        <a class ="navbar" href="index.html">Home</a>
+        <a class="navbar" href="webinars.html">Webinars</a>
+        <a class ="navbar" href="contactus.html">Contact</a>
+        <a class ="navbar" href="aboutus.html">About Us</a>
+        <a class ="navbar" href="login.html">Login</a>
+        <a class ="navbar" href="signup.html">Signup</a>
+    </nav>
+    <div>
+        <h1>Complete your profile</h1>
+        <form id="profileForm">
+            <label>Enter Your Full Name <span class="required">*</span></label>
+            <input type="text" placeholder="Enter your full name" required id="name">
+            
+            <label>Enter Your Age <span class="required">*</span></label>
+            <input type="number" placeholder="Enter your age" required id="age">
+            
+            <label>Enter Your Phone Number <span class="required">*</span></label>
+            <input type="tel" placeholder="Enter your phone number" required id="phone">
+            
+            <label>Bio <span class="required">*</span></label>
+            <textarea rows="5" cols="50" placeholder="Enter your bio..." id="bio"></textarea>
+            
+            <h3>Social Profiles</h3>
+            <label for="github">GitHub Profile</label>
+            <input type="url" id="github" placeholder="https://github.com/yourusername">
+            <a id="githubLink" href="#" target="_blank" class="social-link" style="display:none;">Open GitHub</a>
+            
+            <label for="linkedin">LinkedIn Profile</label>
+            <input type="url" id="linkedin" placeholder="https://linkedin.com/in/yourprofile">
+            <a id="linkedinLink" href="#" target="_blank" class="social-link" style="display:none;">Open LinkedIn</a>
+            
+            <label for="twitter">Twitter Profile</label>
+            <input type="url" id="twitter" placeholder="https://twitter.com/yourhandle">
+            <a id="twitterLink" href="#" target="_blank" class="social-link" style="display:none;">Open Twitter</a>
+            
+            <button style="display: block"type="submit">Save</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('profileForm');
+        form.addEventListener('submit', function(e){
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const age = parseInt(document.getElementById('age').value);
+            const phone = document.getElementById('phone').value.trim();
+            const bio = document.getElementById('bio').value.trim();
+            if(!name || !age || !phone || !bio){
+                alert("Please fill all required fields.");
+                return;
+            }
+            if(age < 10 || age > 100){
+                alert("Please enter a valid age.");
+                return;
+            }
+            const phoneRegex = /^\d{10}$/;
+            if(!phoneRegex.test(phone)){
+                alert("Enter a valid 10-digit phone number.");
+                return;
+            }
+            alert("Profile saved successfully!");
+            window.location.href = "index.html";
+        });
+
+        function setupLink(inputId, linkId){
+            const input = document.getElementById(inputId);
+            const link = document.getElementById(linkId);
+            input.addEventListener('input', () => {
+                if(input.value){
+                    link.href = input.value;
+                    link.style.display = 'inline';
+                } else {
+                    link.style.display = 'none';
+                }
+            });
+        }
+        setupLink('github', 'githubLink');
+        setupLink('linkedin', 'linkedinLink');
+        setupLink('twitter', 'twitterLink');
+    </script>
+</body>
+</html>

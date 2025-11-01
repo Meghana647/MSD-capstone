@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Learning Signup</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <style>
+    body {
+      background-color: #f2f5fa;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .logo-nav {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      display: flex;
+      gap:10px;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-evenly;
+      background-color: white;
+      width:100%;
+    }
+    .navbar a {
+      color:black;
+      padding:10px;
+      font-size: 20px;
+      text-decoration: none;
+    }
+    .logo-nav img {
+      width:100px;
+      height:50px;
+    }
+    .container {
+      display: flex;
+      width:1000px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      max-width: 1100px;
+      margin: 40px auto;
+      overflow: hidden;
+    }
+    .container img {
+      width: 400px;
+      object-fit: cover;
+      height: 100%;
+    }
+    .form-container {
+      padding: 30px;
+      flex: 1;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    select, input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    button {
+      background: #4a90e2;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    button:hover {
+      background: #357ab8;
+    }
+    .role-fields {
+      display: none;
+      margin-top: 10px;
+    }
+    .error {
+      color: red;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    .password-wrapper {
+      position: relative;
+      margin-top: 12px;
+    }
+    .password-wrapper input {
+      width: 100%;
+      padding-right: 40px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    .toggle-password {
+      position:absolute;
+      top: 50%;
+      right:10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 18px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>  
+  <div class="logo-nav">
+    <img src="logo.png" alt="Logo">
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <a href="contactus.html">Contact</a>
+      <a href="aboutus.html">About Us</a>
+      <a href="login.html">Login</a>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
+  </div>
+  <div class="container">
+    <div>
+      <img src="https://media.istockphoto.com/id/1178762871/vector/girl-with-laptop-sitting-on-the-chair-freelance-or-studying-concept-cute-illustration-in.jpg?s=612x612&w=0&k=20&c=c8todvLlpeW4UKMjJJdgrpMPJ9w_C7KzjQWKLQg73Fs=" alt="Signup illustration">
+    </div>
+    <div class="form-container">
+      <h2>Signup</h2>
+      <form id="signupForm">
+        <label for="role">Signup as:</label>
+        <select id="role" name="who" required>
+          <option value="">-- Select Role --</option>
+          <option value="student">Student</option>
+          <option value="parent">Parent/Guardian</option>
+          <option value="host">Host</option>
+        </select>
+
+        <!-- STUDENT -->
+        <div id="studentFields" class="role-fields">
+          <input type="text" name="student_name" placeholder="Full Name">
+          <input type="email" name="student_email" placeholder="Email">
+          <div class="password-wrapper">
+            <input type="password" name="student_password" placeholder="Password" id="studentPassword">
+            <div class="toggle-password" onclick="togglePassword('studentPassword', this)">
+              <i class="fa-solid fa-eye"></i>
+            </div>
+          </div>
+          <div class="password-wrapper">
+            <input type="password" name="student_confirm_password" placeholder="Confirm Password" id="studentConfirmPassword">
+            <div class="toggle-password" onclick="togglePassword('studentConfirmPassword', this)">
+              <i class="fa-solid fa-eye"></i>
+            </div>
+          </div>
+          <input type="text" name="student_grade" placeholder="Grade/Class">
+        </div>
+
+        <!-- PARENT -->
+        <div id="parentFields" class="role-fields">
+          <input type="text" name="parent_name" placeholder="Full Name">
+          <input type="email" name="parent_email" placeholder="Email">
+          <div class="password-wrapper">
+            <input type="password" name="parent_password" placeholder="Password" id="parentPassword">
+            <div class="toggle-password" onclick="togglePassword('parentPassword', this)">
+              <i class="fa-solid fa-eye"></i>
+            </div>
+          </div>
+          <div class="password-wrapper">
+            <input type="password" name="parent_confirm_password" placeholder="Confirm Password" id="parentConfirmPassword">
+            <div class="toggle-password" onclick="togglePassword('parentConfirmPassword', this)">
+              <i class="fa-solid fa-eye"></i>
+            </div>
+          </div>
+          <input type="text" name="child_name" placeholder="Child's User Name">
+        </div>
+
+        <!-- HOST -->
+        <div id="hostFields" class="role-fields">
+          <input type="text" name="host_name" placeholder="Full Name">
+          <input type="email" name="host_email" placeholder="Email">
+          <div class="password-wrapper">
+            <input type="password" name="host_password" placeholder="Password" id="hostPassword">
+            <div class="toggle-password" onclick="togglePassword('hostPassword', this)">
+              <i class="fa-solid fa-eye"></i>
+            </div>
+          </div>
+          <div class="password-wrapper">
+            <input type="password" name="host_confirm_password" placeholder="Confirm Password" id="hostConfirmPassword">
+            <div class="toggle-password" onclick="togglePassword('hostConfirmPassword', this)">
+              <i class="fa-solid fa-eye"></i>
+            </div>
+          </div>
+          <input type="text" name="host_organization" placeholder="Organization">
+        </div>
+
+        <p id="errorMsg" class="error"></p>
+        <button id="signup" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+<script>
+const roleSelect = document.getElementById("role");
+const studentFields = document.getElementById("studentFields");
+const parentFields = document.getElementById("parentFields");
+const hostFields = document.getElementById("hostFields");
+const signupForm = document.getElementById("signupForm");
+const errorMsg = document.getElementById("errorMsg");
+
+// Show/hide fields based on role
+roleSelect.addEventListener("change", function () {
+  studentFields.style.display = "none";
+  parentFields.style.display = "none";
+  hostFields.style.display = "none";
+
+  if (this.value === "student") studentFields.style.display = "block";
+  else if (this.value === "parent") parentFields.style.display = "block";
+  else if (this.value === "host") hostFields.style.display = "block";
+});
+
+// Toggle password visibility
+function togglePassword(inputId, element) {
+  const pwd = document.getElementById(inputId);
+  const eyeIcon = element.querySelector("i");
+  if(pwd.type==="password"){
+    pwd.type="text";
+    eyeIcon.classList.remove("fa-eye");
+    eyeIcon.classList.add("fa-eye-slash");
+  } else {
+    pwd.type="password";
+    eyeIcon.classList.remove("fa-eye-slash");
+    eyeIcon.classList.add("fa-eye");
+  }
+}
+
+// Validation helpers
+function isStrongPassword(password) {
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+  return regex.test(password);
+}
+
+function isValidEmail(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+}
+
+// Submit form
+signupForm.addEventListener("submit", async function (event) {
+  event.preventDefault();
+  errorMsg.textContent = "";
+
+  if (!roleSelect.value) {
+    errorMsg.textContent = "Please select a role.";
+    return;
+  }
+
+  const activeFields = document.querySelector(`#${roleSelect.value}Fields`);
+  const inputs = activeFields.querySelectorAll("input");
+
+  for (let input of inputs) {
+    if (!input.value.trim()) {
+      errorMsg.textContent = "All fields must be filled.";
+      return;
+    }
+  }
+
+  const emailInput = [...inputs].find(i => i.type === "email");
+  if (!isValidEmail(emailInput.value)) {
+    errorMsg.textContent = "Please enter a valid email.";
+    return;
+  }
+
+  // Password and confirm password check
+  const passwordInput = [...inputs].find(i => i.type === "password" && !i.name.includes("confirm"));
+  const confirmInput = [...inputs].find(i => i.name.includes("confirm"));
+
+  if (!isStrongPassword(passwordInput.value)) {
+    errorMsg.textContent =
+      "Password must be at least 8 chars, include uppercase, lowercase, number, and special character.";
+    return;
+  }
+
+  if (passwordInput.value !== confirmInput.value) {
+    errorMsg.textContent = "Passwords do not match!";
+    return;
+  }
+
+  // Prepare payload for backend
+  const payload = {
+    role: roleSelect.value,
+    name: inputs[0].value,           
+    email: emailInput.value,
+    password: passwordInput.value,
+    extra: inputs[inputs.length-1].value // grade/class or child name or organization
+  };
+
+  try {
+    const response = await fetch("http://localhost:3000/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      alert(result.message);
+      signupForm.reset();
+      studentFields.style.display = "none";
+      parentFields.style.display = "none";
+      hostFields.style.display = "none";
+      window.location.href = "login.html";
+    } else {
+      errorMsg.textContent = result.message;
+    }
+  } catch (error) {
+    console.error(error);
+    errorMsg.textContent = "Server error. Please try again later.";
+  }
+});
+</script>
+</body>
+</html>

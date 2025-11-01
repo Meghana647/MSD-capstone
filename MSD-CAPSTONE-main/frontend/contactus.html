@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <style>
+    body
+    {
+      position: relative;
+    }
+    .main {
+      display: flex;
+      flex-wrap: wrap;   
+      gap:20px;      
+    }
+    .flex1,.container {
+      border:2px solid white;
+      margin-top: 50px;
+      flex:1;
+    }
+    .grid-container {   
+      display: grid;
+      padding: 20px;
+      grid-template-rows: repeat(2,200px);
+      grid-template-columns: repeat(2,1fr);
+      gap:10px;
+    }
+    .flex1 p:nth-child(1){
+      margin-top: 0;
+      background-color: #27285C;
+      text-align:center;
+      padding: 10px;
+      color:white;
+      font-weight: bold;
+      font-size: 25px;
+    }
+    .grid-container div{
+      border:1px solid #27285C ;
+      position: relative;
+      padding: 25px;
+      line-height: 20px;
+      border-top:none;
+      border-left: none;
+      color:#27285C;
+      font-size: 20px;
+      text-align:center;
+    }
+    .grid-container div p:first-of-type {
+      font-weight: bold;
+    }
+    .grid-container div:nth-child(2),
+    .grid-container div:nth-child(4) {
+      border-right: none;
+    }
+    .grid-container div:nth-child(3),
+    .grid-container div:nth-child(4) {
+      border-bottom: none;
+    }
+    .grid-container .cell1::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 15px;
+      height: 15px;
+      background: white;
+    }
+    .container p {
+      background-color: #27285C;
+      padding: 15px;
+      color:white;
+      text-align: center;
+      font-size: 25px;
+      font-weight: bold;
+    }
+    .side {
+      display: flex;
+      gap:10px;
+      margin-bottom: 30px;
+    }
+    .input-wrapper {
+      border: none;
+      padding: 10px;
+      box-shadow: 0 2px 2px rgb(0,0,0,0.2);
+    }
+    .input-wrapper input,i {
+      border: none;
+      outline: none;
+      font-size: 20px;
+      color:#27285C;
+      width:180px;
+    }
+    .input-wrapper input::placeholder {
+      font-size: 20px;
+      color:#27285C;
+    }
+    .required {
+      color:red;
+    }
+    textarea {
+      width: 95%;
+      padding: 10px 15px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      resize: vertical; 
+      box-shadow: 0 2px 2px rgba(0,0,0,0.2);
+      color: #27285C;
+      outline: none;
+    }
+    textarea::placeholder {
+      color: #27285C;
+      font-size: 18px;
+    }
+    button {
+      padding: 12px 25px;
+      font-size: 18px;
+      color: white;
+      background-color: #27285C;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 15px;
+    }
+    button:hover {
+      background-color: #1e1f4c; 
+    }
+    .logo-nav {
+      display: flex;
+      gap:20px;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-evenly;
+      background-color: #1e1f4c;
+      width:100%;
+    }
+    .navbar a {
+      color:white;
+      padding:10px;
+      font-size: 25px;
+      text-decoration: none;
+    }
+    img {
+      width:100px;
+      height:50px;
+    }
+    #thankyou {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #f1f1f1;
+      border-left: 5px solid #27285C;
+      position: relative;
+      font-size: 18px;
+      color: #27285C;
+      border-radius: 8px;
+    }
+    #thankyou .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 20px;
+      font-size: 20px;
+      color: #fff;
+      background: red;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      text-align: center;
+      line-height: 22px;
+      cursor: pointer;
+    }
+    a img{
+      right:20px;
+      position: absolute;
+    }
+    #chatbot
+    {
+      display: none;
+      border:none;
+      width:400px;
+      height:500px;
+      margin-top: 10px;
+      bottom: 40px;
+      right:40px;
+      position: fixed;
+    }
+    #chatimg
+    {
+  position: fixed;
+  bottom: 10px;    
+  right: 20px;     
+  cursor: pointer;
+  width: 60px; 
+  height: 60px;
+  border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo-nav">
+    <img src="logo.png">
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <a href="aboutus.html">About Us</a>
+      <a href="login.html">Login</a>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
+  </div>
+
+  <div class="main">
+    <div class="flex1">
+      <p>Get In Touch With Us!</p>
+      <div class="grid-container">
+        <div class="cell1">
+          <i class="fa-solid fa-phone"></i>
+          <p>Phone Number</p>
+          <p>+91 80004 36640</p>
+        </div>
+        <div class="cell2">
+          <i class="fa-solid fa-envelope"></i>
+          <p>Email</p>
+          <p>info@learnonthego.com</p>
+          <p>edu@learnpthego.com</p>
+        </div>
+        <div class="cell3">
+          <i class="fa-solid fa-location-dot"></i>
+          <p>Location</p>
+          <p>518, Rythm plaza, Amar Javan Circle, Nikol</p>
+          <p>Ahmedabad, Gujarat-382350</p>
+        </div>
+        <div class="cell4">
+          <i class="fa-solid fa-clock"></i>
+          <p>Working Hours</p>
+          <p>Monday to Saturday</p>
+          <p>24X7</p>
+        </div>
+      </div>
+    </div>
+
+    <form class="container">
+      <p>Contact Us</p>
+      <div class="side">
+        <div class="input-wrapper">
+          <i class="fa-solid fa-user"></i>
+          <input type="text" id="firstname" placeholder="First name">
+          <span class="required">*</span>
+        </div>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-user"></i>
+          <input type="text" id="lastname" placeholder="Last name">
+          <span class="required">*</span>
+        </div>
+      </div>
+      <div class="side">
+        <div class="input-wrapper">
+          <i class="fa-solid fa-envelope"></i>
+          <input type="email" id="email" placeholder="Email">
+          <span class="required">*</span>
+        </div>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-phone"></i>
+          <input type="tel" id="phn" placeholder="Phone Number">
+          <span class="required">*</span>
+        </div>
+      </div>
+      <textarea id="message" rows="5" cols="40" placeholder="Message"></textarea>
+      <button onclick="response(event)">Submit</button>
+      <div id="thankyou"></div>
+    </form>
+  </div>
+  <iframe id="chatbot" src="chatbot.html"></iframe>
+  <img id="chatimg" onclick="openchat()" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX0mKrzeX319CWVO-zz3O2uf9D7zdWMd_s5A&s">
+  
+  <script>
+async function response(e) {
+  e.preventDefault();
+  let ans = document.getElementById("thankyou");
+  const phoneRegex = /^\+?[0-9]{7,15}$/;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  let fname = document.getElementById("firstname").value.trim();
+  let lname = document.getElementById("lastname").value.trim();
+  const email = document.getElementById('email').value.trim();
+  const message = document.getElementById('message').value.trim();
+  const phn = document.getElementById('phn').value.trim();
+  const subject = `${fname} ${lname} (${phn})`;
+
+  if (!email || !fname || !message || !lname || !phn) {
+    alert("All fields should be filled");
+    return;
+  } else if (!phoneRegex.test(phn)) {
+    alert("Not a valid phone number");
+    return;
+  } else if (!emailPattern.test(email)) {
+    alert("Not a valid email");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:3000/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: `${fname} ${lname}`, email, subject, message })
+    });
+
+    const data = await res.json();
+
+    if(res.ok){
+      ans.style.display = "block";
+      ans.innerHTML = `
+        <span class="close-btn">&times;</span>
+        <p>Hi ${fname}, thank you for contacting us!<br>
+        We will get back to you shortly.</p>`;
+      
+      ans.querySelector(".close-btn").addEventListener("click", () => {
+        ans.style.display = "none";
+      });
+
+      // Clear fields
+      document.getElementById("firstname").value = '';
+      document.getElementById("lastname").value = '';
+      document.getElementById("email").value = '';
+      document.getElementById("phn").value = '';
+      document.getElementById("message").value = '';
+    } else {
+      alert(data.message);
+    }
+  } catch(err) {
+    console.error(err);
+    alert("Server error. Please try again later.");
+  }
+}
+
+function openchat() {
+  let frame = document.getElementById("chatbot");
+  frame.style.display = frame.style.display == "block" ? "none" : "block";
+}
+</script>
+
+</body>
+</html>

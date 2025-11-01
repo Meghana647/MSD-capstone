@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Join Webinar</title>
+</head>
+<body>
+  <h2>Verifying your access...</h2>
+  <div id="status">Please wait...</div>
+<script>
+(async function() {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token');
+  if (!token) {
+    document.getElementById('status').innerText = 'Missing token.';
+    return;
+  }
+
+  try {
+    const res = await fetch(`http://localhost:3000/api/webinars/verify-token?token=${encodeURIComponent(token)}`);
+    const data = await res.json();
+    if (data.valid) {
+      document.getElementById('status').innerText = 'Access granted. Redirecting to meeting...';
+      // redirect to the actual jitsi meeting
+      window.location.href = data.meetingLink;
+    } else {
+      document.getElementById('status').innerText = data.message || 'Access denied.';
+    }
+  } catch (err) {
+    console.error(err);
+    document.getElementById('status').innerText = 'Server error during verification.';
+  }
+})();
+</script>
+</body>
+</html>

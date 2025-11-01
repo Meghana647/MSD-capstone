@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html,body {
+      height:100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .chatbot {
+      width:350px;
+      display: flex;
+      flex-direction: column;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .head {
+      background-color: #4bac4e;
+      text-align: center;
+      padding:16px;
+      color: white;
+      font-size: 16px;
+      font-family: sans-serif;
+      font-weight: bold;
+    }
+    .chat-body {
+      flex: 1;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+      background-color: white;
+    }
+    .welcome, .message {
+      background-color: rgba(128, 128, 128, 0.2);
+      width: fit-content;
+      padding: 8px;
+      border-radius: 6px;
+      font-family: sans-serif;
+    }
+    .user {
+      background-color: #4bac4e;
+      color: white;
+      align-self: flex-end;
+    }
+    .footer {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+    .footer input {
+      flex: 1;
+      border: none;
+      padding: 10px;
+      outline: none;
+    }
+    .footer button {
+      background: #4bac4e;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="chatbot">
+    <div class="head">Chatbot
+    </div>
+    <div class="chat-body">
+      <div class="welcome">Hello! How can I help you today?</div>
+    </div>
+    <div class="footer">
+      <input type="text" placeholder="Type a message...">
+      <button>Send</button>
+    </div>
+  </div>
+</body>
+<script>
+  const input = document.querySelector(".footer input");
+const button = document.querySelector(".footer button");
+const chatBody = document.querySelector(".chat-body");
+
+
+function addMessage(text, sender = "user") {
+  if(text.trim() === "") return;
+
+  const msg = document.createElement("div");
+  msg.classList.add("message");
+  if(sender === "user") msg.classList.add("user");
+  msg.textContent = text;
+  chatBody.appendChild(msg);
+
+  chatBody.scrollTop = chatBody.scrollHeight; 
+}
+
+
+function botReply(userText) {
+  let reply;
+
+  userText = userText.toLowerCase();
+  if(userText.includes("hi") || userText.includes("hello")||userText.includes("good")) {
+    reply = "Hello! Welcome to our website. Do you want to know about our website?";
+  }
+  else if(userText.includes("yes")) {
+    reply = "What do you want to know about?"; 
+  }
+  else if(userText.includes("courses")) {
+    reply = "You can find numerous courses based on your choice.Kindly visit courses page";
+  } else if(userText.includes("groups")) {
+    reply = "You can form your own groups or join existing groups .Please visit groups page";
+  }
+  else if(userText.includes("webinars")) {
+    reply = "You can attend webinars.Check our webinars page";
+  }
+  else if(userText.includes('not'))
+{
+  reply="Still any queires?Feel free to Contact Us"
+}
+   else if(userText.includes("thanks") || userText.includes("thank you")||userText.includes("ok")||userText.includes("bye")) {
+    reply = "You're welcome! 😊";
+  } else {
+    reply = "Sorry, I didn’t get that. Can you ask about our website?";
+  }
+
+  setTimeout(() => addMessage(reply, "bot"), 800); 
+}
+
+function handleSend() {
+  const text = input.value;
+  addMessage(text, "user");
+  input.value = "";
+  botReply(text);
+}
+
+button.addEventListener("click", handleSend);
+input.addEventListener("keypress", (e) => {
+  if(e.key === "Enter") handleSend();
+});
+
+</script>
+</html>

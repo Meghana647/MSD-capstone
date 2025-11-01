@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily News</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f6fa;
+      margin: 0;
+      padding: 0;
+    }
+    .logo-nav {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      display: flex;
+      gap:10px;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-evenly;
+      background-color: white;
+      width:100%;
+    }
+    .navbar a {
+      color:black;
+      padding:10px;
+      font-size: 20px;
+      text-decoration: none;
+    }
+    .logo-nav img {
+      width:100px;
+      height:50px;
+    }
+    header {
+      background: skyblue;
+      color: black;
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      padding: 1.5rem;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-content {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .card h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1rem;
+    }
+    .card p {
+      flex: 1;
+      font-size: 0.85rem;
+      color: #555;
+    }
+    .card a {
+      margin-top: 0.8rem;
+      text-decoration: none;
+      color: #1e3a8a;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.8rem;
+      background: #eee;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo-nav">
+    <img src="logo.png">
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <a href="contactus.html">Contact</a>
+      <a href="aboutus.html">About Us</a>
+      <a href="login.html">Login</a>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
+  </div>
+  <header>Daily News</header>
+  <div class="container" id="news-container">
+    <p style="text-align:center;">Loading latest news...</p>
+  </div>
+  <footer>Powered by NewsAPI | E-Learning Platform</footer>
+
+  <script>
+    const API_KEY = "53627cf1e61f4d6e92cde3015a55174a";
+    const URL = `https://newsapi.org/v2/top-headlines?country=us&pageSize=100&apiKey=${API_KEY}`;
+
+    async function fetchNews() {
+      try {
+        const res = await fetch(URL);
+        const data = await res.json();
+        const container = document.getElementById("news-container");
+        container.innerHTML = "";
+
+        data.articles.forEach(article => {
+          const card = document.createElement("div");
+          card.className = "card";
+
+          card.innerHTML = `
+            <img src="${article.urlToImage || 'https://via.placeholder.com/300x180'}" alt="news">
+            <div class="card-content">
+              <h3>${article.title}</h3>
+              <p>${article.description || "No description available."}</p>
+              <a href="${article.url}" target="_blank">Read More →</a>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      } catch (error) {
+        console.error("Error fetching news:", error);
+        document.getElementById("news-container").innerHTML = "<p>Failed to load news.</p>";
+      }
+    }
+
+    fetchNews();
+  </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Learning Platform</title>
+   <link href="index.css" rel="stylesheet">
+</head>
+<body>
+  
+  <nav class="flex-container">
+    <img class="logo" src="logo.png" alt="Logo">
+    <a class="navbar" href="index.html">Home</a>
+    <a class="navbar" href="contactus.html">Contact</a>
+    <a class="navbar" href="aboutus.html">About Us</a>
+    <a class="navbar" href="login.html">Login</a>
+    <a class="navbar" href="signup.html">Signup</a>
+    <select id="dropdown" onchange="navigate()">
+      <option>Explore</option>
+      <option value="webinars.html">Webinars</option>
+      <option value="groups.html">Groups</option>
+      <option value="courses.html">Courses</option>
+      <option value="news.html">News</option>
+    </select>
+  </nav>
+
+  <section class="hero-carousel">
+    <div class="slide active" style="background-image: url('https://media.istockphoto.com/id/2213050537/photo/online-education-with-smartphone-modern-way-of-learning-remote-access-to-lessons-educational.jpg?s=612x612&w=0&k=20&c=uklz3ACjuXcGo4DyH8NN7Plm1ZnCbq2RQCUd27CsTdg=');">
+      <div class="hero-content">
+        <h1>Connect with Students Worldwide</h1>
+        <p>Join groups, share knowledge, and grow your skills online.</p>
+        <a href="signup.html"><button class="signup">Get Started</button></a>
+      </div>
+    </div>
+    <div class="slide" style="background-image: url('https://media.istockphoto.com/id/1310908620/photo/a-vivid-illustration-of-conceptual-objects-on-catwalks-and-platforms-the-concept-of-online.jpg?s=612x612&w=0&k=20&c=qgcgRH1EneMRSZwnbrQtMotjuAYHCjytwzebD1_McUk=');">
+      <div class="hero-content">
+        <h1>Explore Thousands of Courses</h1>
+        <p>Learn new skills at your own pace with expert instructors.</p>
+        <a href="signup.html"><button class="signup">Join Now</button></a>
+      </div>
+    </div>
+    <div class="slide" style="background-image: url('https://media.istockphoto.com/id/1329983365/photo/online-class-online-education-e-learning-technology-on-mobile-smartphone-training-course-and.jpg?s=612x612&w=0&k=20&c=DzH5PKf5mAKjKyIXsYjjd2r4e4dOsAjPEmB_QTrwDJQ=');">
+      <div class="hero-content">
+        <h1>Collaborate and Share Knowledge</h1>
+        <p>Join student groups and collaborate on projects worldwide.</p>
+        <a href="signup.html"><button class="signup">Get Started</button></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="highlights">
+    <div class="highlights-left">
+      <img src="f.png" alt="Highlights Illustration">
+    </div>
+    <div class="highlights-right">
+      <h2>Highlights & Benefits</h2>
+      <ul>
+        <li>Join Student Groups – Connect with learners worldwide.</li>
+        <li>Create Your Own Groups – Start your own communities.</li>
+        <li>Explore Courses – Access a variety of topics.</li>
+        <li>Search & Discover – Quickly find courses or groups.</li>
+        <li>Interactive Learning – Engage in discussions and projects.</li>
+        <li>Responsive Design – Learn anytime, anywhere.</li>
+        <li>Easy Navigation – User-friendly interface for all users.</li>
+      </ul>
+    </div>
+  </section>
+   <h2 style="text-align: center;">TRENDING COURSES</h2>
+  <div class="group-container">
+    <div class="group-card">
+      <h5 class="subject">MERN stack development</h5>
+      <p>Founder:Mercy</p>
+      <p>1Cr+ members</p>
+      <button class="enroll">Enroll Now</button>
+    </div>
+    <div class="group-card">
+      <h5 class="subject">Data Structures and Algorithms</h5>
+      <p>Founder:Satvika</p>
+      <p>90L+ members</p>
+      <button class="enroll">Enroll Now</button>
+    </div>
+    <div class="group-card">
+      <h5 class="subject">Signals and Systems</h5>
+      <p>Founder:Daniya</p>
+      <p>75L+ members</p>
+      <button class="enroll">Enroll Now</button>
+    </div>
+    <div class="group-card">
+      <h5 class="subject">Sense Organs</h5>
+      <p>Founder:Sampoorna</p>
+      <p>70L+ members</p>
+      <button class="enroll">Enroll Now</button>
+    </div>
+  </div>
+  <!-- <button id="create">
+    Create Your Own Group</button>
+    <img id="goodstart" src="good-start.jpg"> -->
+  <h2 style="text-align: center;margin-top: 30px;">What Our Students Say</h2>
+  <div class="testimonals">
+    <div class="test">
+      <div class="div-image">
+      <img class="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIJzJUCo-RpJB0V8hJcNhjHSbddEkvk5hZJw&s">
+      </div>
+      <p>"This platform made learning so easy! The courses are well structured."</p>
+    <h4>- Lakshmi, Student</h4>
+    </div>
+    <div class="test">
+      <div class="div-image">
+      <img class="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRddAFk23TNzUmPdqLu1Jcgi7lfXI1kOrDUSQ&s"></div>
+      <p>"Thanks to these courses, I improved my coding skills and got a job!"</p>
+    <h4>- Rahul, Software Engineer</h4>
+    </div>
+    <div class="test">
+      <div class="div-image">
+      <img class="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpiPoHGKzz5MKxHH4MYU_rcDPt5NOFR25dPQ&s"></div>
+      <p>"The teachers are very supportive and the content is excellent."</p>
+    <h4>- Priya, Data Analyst</h4>
+    </div>
+    <div class="test">
+      <div class="div-image">
+      <img class="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSATeQ7t2sHfynpVD3xu0h7N9aFixZ9o0Om_A&s"></div>
+      <p>"Engaging with various students helps to learn new things"</p>
+    <h4>- Yasaswi, Teacher</h4>
+    <iframe id="chatbot" src="chatbot.html"></iframe>
+  <img id="chatimg" onclick="openchat()" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX0mKrzeX319CWVO-zz3O2uf9D7zdWMd_s5A&s">
+    </div>
+  </div>
+  <footer>
+  <p>© 2025 LearnOnTheGo Pvt. All Rights Reserved.</p>
+</footer>
+
+  
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if(i === index) 
+        slide.classList.add('active');
+      });
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    setInterval(nextSlide, 5000); 
+
+//enroll
+    let enrollButtons=document.getElementsByClassName("enroll")
+    let count=0
+    Array.from(enrollButtons).forEach(button => {
+  button.addEventListener("click", function() {
+    let course = this.parentElement.querySelector(".subject").innerText;
+    button.textContent="Enrolled"
+     count+=1
+    alert("You enrolled in the course: " + course + "\nTotal enrolled: " + count);
+  });
+});
+
+
+function navigate()
+{
+  let value=document.getElementById("dropdown").value;
+  if(value)
+  window.location.href=value;
+}
+function openchat()
+    {
+      let frame=document.getElementById("chatbot")
+      if(frame.style.display=="block")
+      frame.style.display="none"
+      else
+      frame.style.display="block"
+    }
+  
+  </script>
+</body>
+</html>
