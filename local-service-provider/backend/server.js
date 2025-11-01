@@ -7,15 +7,19 @@ const socketIo = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
+// ✅ Fixed CORS setup
+const corsOptions = {
+  origin: "http://localhost:5173", // your frontend origin
+  methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
+  credentials: true,
+};
+
 const io = socketIo(server, {
-  cors: {
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST"]
-  }
+  cors: corsOptions,
 });
 
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // MongoDB Connection
